@@ -7,7 +7,7 @@ const PokemonList = ({pokemon}) => {
             pokemon.map(p => {
               const [name, url] = p;
               return (
-                <div>
+                <div key={name}>
                     <PokemonImg url={url} />
                   <h1>{name}</h1>
                 </div>

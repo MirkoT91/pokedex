@@ -1,3 +1,5 @@
+
+
 * {
     box-sizing: border-box;
     padding: 0;
@@ -10,12 +12,11 @@ body {
     height: 100vh;
     overflow-y: scroll;
     scroll-behavior: smooth;
-    background-color: rgba(186, 214, 72, 0.715);
-
+    background-image: linear-gradient(to right, yellow, green);
+    
     .mainContainer {
-        min-height: 100vh;
+        max-height: 50%;
         max-width: 90%;
-
         display: flex;
         justify-content: center;
         flex-direction: column;
@@ -35,9 +36,11 @@ body {
         }
 
         .cardListContainer {
-            min-height: calc(100vh - 100px);
+            min-height: calc(100vh - 200px);
+            margin-top: 15px;
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(5, 1fr);
             grid-column-gap: 50px;
             grid-row-gap: 50px;
 
@@ -45,9 +48,18 @@ body {
                 text-align: center;
                 box-shadow: 0 0 30px 10px rgba(0, 0, 0, 0.3);
                 border-radius: 5px;
-                height: 400px;
+                height: 100%;
                 overflow: hidden;
             }
+
+            div:hover {
+                transform: scale(1.1);
+            }
+
+            @media screen and (max-width: 1000px) {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
         }
         
     }

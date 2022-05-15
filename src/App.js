@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 import PokemonList from './components/PokemonList.component';
+import SearchBox from './components/SearchBox/SearchBox.component';
 
 import './App.styles.scss';
 
@@ -12,6 +13,8 @@ const App = () => {
   const [nextPageUrl, setNextPageUrl] = useState()
   const [previousPageUrl, setPreviousPageUrl] = useState()
   const [loading, setLoading] = useState(true)
+  const [filteredPokemon, setFilteredPokemon] = useState(pokemon);
+  const [searchBox, setSearchBox] = useState('');
 
 
   useEffect(() => {
@@ -24,19 +27,46 @@ const App = () => {
     })
   }, [currentPageUrl]);
 
-  if (loading) return "Loading..."
+  useEffect(() => {
+    const newFilteredPokemon = pokemon.filter((p) => {
+      return p[0].includes(searchBox);
+    })
+    setFilteredPokemon(newFilteredPokemon)
+  }, [pokemon, searchBox])
 
+  const onSearchChange = (event) => {
+    const searchBoxString = event.target.value;
+    setSearchBox(searchBoxString)
+    console.log(searchBoxString)
+  }
 
-  return (
-      <div className='mainContainer'>
-        <div className='inputContainer'>
-          <input type="text" placeholder='Search for a pokemon...' />
+  {
+    return (
+      loading ? "Loading" : 
+        <div className='mainContainer'>
+
+          <div className='inputContainer'>
+
+            <SearchBox 
+              type={"text"}
+              placeholder={"Search for a pokemon..."}
+              onChangeHandler={onSearchChange}
+            />
+
+          </div>
+
+          <div className='cardListContainer'>
+
+              <PokemonList pokemon={filteredPokemon} />
+
+          </div>
+
         </div>
-        <div className='cardListContainer'>
-            <PokemonList pokemon={pokemon} />
-        </div>
-      </div>
     )
+  }
+
+
+  
     
 }
 
